@@ -610,7 +610,27 @@
                     </div>
                   </div>
                 </div>
-
+@keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes floatUpDown {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .animate-float {
+      animation: floatUpDown 2s ease-in-out infinite;
+    }
                 <!-- アクションボタン -->
                 <div class="flex flex-col sm:flex-row gap-4 animate-fadeIn">
                   <a
