@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="歯科医院の採用力を8つの質問で診断。採用活動の課題を見える化し、改善ポイントを具体的に提案します。">
+  <meta name="keywords" content="歯科医院,採用,診断,求人,人材,choista">
+  
+  <!-- OGP設定 -->
+  <meta property="og:title" content="歯科医院向け採用力簡易診断 | choista">
+  <meta property="og:description" content="8つの質問であなたの医院の採用力を診断。改善ポイントを具体的に提案します。">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://example.com/ogp-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <title>歯科医院向け採用力簡易診断 | choista</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    /* アニメーション定義 */
+    @keyframes fadeIn {
+      from { 
+        opacity: 0; 
+        transform: translateY(20px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+    
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+    
+    .animate-fadeIn { 
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    .animate-slideIn {
+      animation: slideInFromLeft 0.5s ease-out forwards;
+    }
+    
+    .animate-scaleIn {
+      animation: scaleIn 0.4s ease-out forwards;
+    }
+    
+    .animate-pulse-slow {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    /* カスタムスタイル */
+    body { 
+      color: #272727;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    
+    /* スムーズスクロール */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* ボタンホバー効果強化 */
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .btn-primary:hover::before {
+      left: 100%;
+    }
+    
+    /* プログレスバーアニメーション */
+    .progress-bar {
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* カード影効果 */
+    .card-shadow {
+      box-shadow: 0 10px 40px rgba(60, 166, 255, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+    
+    .card-shadow:hover {
+      box-shadow: 0 15px 50px rgba(60, 166, 255, 0.2);
+    }
+    
+    /* スター評価アニメーション */
+    .star-rating span {
+      display: inline-block;
+      animation: scaleIn 0.3s ease-out forwards;
+      animation-delay: calc(var(--index) * 0.1s);
+      opacity: 0;
+    }
+    
+    /* ローディングスピナー */
+    .spinner {
+      border: 3px solid rgba(60, 166, 255, 0.1);
+      border-top-color: #3ca6ff;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    /* レスポンシブiframe */
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 ratio */
+      height: 0;
+      overflow: hidden;
+    }
+    
+    .iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* フォーカス可視化（アクセシビリティ） */
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #3ca6ff;
+      outline-offset: 2px;
+    }
+    
+    /* スクリーンリーダー用 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-yellow-50 min-h-screen">
+  <!-- メインアプリケーションコンテナ -->
+  <div id="app" role="main"></div>
+  
+  <!-- ローディング表示 -->
+  <div id="loading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    // =========================
+    // データ定義
+    // =========================
+    const QUESTIONS = [
+      {
+        id: 1,
+        category: 'コスト',
+        question: '1年間の採用活動費を、将来的に情報が残るLPではなく、流れて消える求人媒体に主に投下していますか?',
+        issueTrigger: 'NO',
+        solution: {
+          title: '応募単価の改善と資産化',
+          description: '求人媒体に依存せず、LPを採用の資産として活用できます。\nCVRの高いLPで費用対効果を最大化。'
+        }
+      },
+      {
+        id: 2,
+        category: 'スピード',
+        question: '見学・面接後に、応募者からの質問や疑問に迅速に回答するためのFAQコンテンツを事前に用意していますか?',
+        issueTrigger: 'NO',
+        solution: {
+          title: '選考プロセス前の離脱防止',
+          description: 'LP上で3D見学を公開し、面接での質問を減らすことで選考スピード向上に寄与します。'
+        }
+      },
+      {
+        id: 3,
+        category: '魅力度',
+        question: '医院の働く魅力や教育制度を、院長先生のメッセージだけでなく、現役スタッフによるインタビュー記事や動画で公開していますか？',
+        issueTrigger: 'NO',
+        solution: {
+          title: '訴求力の最大化とブランディング',
+          description: '採用LPと3D見学で職場の魅力を具体的に伝え、医院ブランディングを強化します。'
+        }
+      },
+      {
+        id: 4,
+        category: '定着率',
+        question: '採用時に求める人材像や価値観が具体的に言語化・文書化され、スタッフ全員に共有されていますか?',
+        issueTrigger: 'NO',
+        solution: {
+          title: 'ミスマッチの解消と根本原因の分析',
+          description: '入社前の期待値調整を徹底し、LPで求職者行動を分析することで採用コンセプトを改善できます。'
+        }
+      },
+      {
+        id: 5,
+        category: '市場性',
+        question: '求人に「未経験・ブランク歓迎」と明記していないため、潜在的な応募者層の母集団形成に苦労していますか?',
+        issueTrigger: 'YES',
+        solution: {
+          title: '潜在層へのアプローチと応募促進',
+          description: '3D見学や制度紹介で不安を解消し、広く応募者を集められます。'
+        }
+      },
+      {
+        id: 6,
+        category: '価値観マッチ',
+        question: '医院の理念や行動指針など、「働く上で最も大切にしている価値観」を、求人情報内で明確かつ具体的に公開していますか?',
+        issueTrigger: 'NO',
+        solution: {
+          title: 'ミスマッチ防止と価値観訴求',
+          description: '事前にLPや3D見学で医院の価値観を可視化し、価値観に合う人材を集められます。'
+        }
+      },
+      {
+        id: 7,
+        category: '評判・認知',
+        question: '求職者が現地見学の申し込みをする前に、医院の設備や雰囲気をオンラインで確認できる環境を用意していますか?',
+        issueTrigger: 'NO',
+        solution: {
+          title: '3D見学による事前体験',
+          description: 'オンラインで医院の雰囲気を可視化し、見学意欲や応募意欲を向上させます。'
+        }
+      },
+      {
+        id: 8,
+        category: '応募者体験',
+        question: '「入社しない理由」として、情報不足や働くイメージのギャップが原因だと感じた応募者が直近でいましたか?',
+        issueTrigger: 'YES',
+        solution: {
+          title: '応募者体験の向上',
+          description: 'LPと3D見学で事前情報を充実させ、問い合わせや質問を減らしてスムーズな選考体験を提供します。'
+        }
+      }
+    ];
+
+    // =========================
+    // アプリケーション状態管理
+    // =========================
+    class DiagnosisApp {
+      constructor() {
+        this.stage = 'intro';
+        this.currentQuestion = 0;
+        this.answers = {};
+        this.startTime = null;
+        this.init();
+      }
+
+      init() {
+        this.render();
+        this.setupErrorHandling();
+        this.trackPageView();
+      }
+
+      setupErrorHandling() {
+        window.addEventListener('error', (event) => {
+          console.error('エラーが発生しました:', event.error);
+          this.showError('予期しないエラーが発生しました。ページをリロードしてください。');
+        });
+      }
+
+      trackPageView() {
+        // Google Analytics等の分析ツール連携用
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'page_view', {
+            page_title: document.title,
+            page_location: window.location.href
+          });
+        }
+      }
+
+      showError(message) {
+        alert(message);
+      }
+
+      // スコア計算
+      getScore() {
+        return QUESTIONS.length - this.getIssues().length;
+      }
+
+      // 課題リストの取得
+      getIssues() {
+        return QUESTIONS.filter((q, idx) => this.answers[idx] === q.issueTrigger);
+      }
+
+      // スコア評価コメント
+      getScoreComment(score) {
+        if (score === 8) return '完璧です！採用力は最高レベル';
+        if (score >= 6) return 'かなり良い状態ですが、まだ伸びしろがあります';
+        if (score >= 4) return '平均的。ここから差がつきます';
+        if (score >= 2) return 'いまの採用力は"偶然頼み"かもしれません';
+        return '採用の仕組み化が急務です';
+      }
+
+      // アドバイスメッセージ
+      getAdviceMessage(score) {
+        if (score === 8) return 'すでに高い採用力をお持ちです！さらに細かい改善で、理想の採用活動を実現できます。';
+        if (score >= 6) return 'あと一歩で採用力が飛躍的に向上します！特に改善ポイントに注力すれば、応募数・質ともに大きく変わるはずです。';
+        if (score >= 4) return 'この結果は、あなたの採用ページが伝わり切っていない可能性があります！改善ポイントを1つずつクリアしていきましょう。';
+        if (score >= 2) return '採用活動が"場当たり的"になっている可能性が高いです。まずは仕組み化から始めることをお勧めします。';
+        return '採用の基盤が整っていない状態です。今すぐ改善に着手しないと、良い人材との出会いを逃し続けることになります。';
+      }
+
+      // イントロ画面
+      renderIntro() {
+        return `
+          <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="max-w-2xl w-full bg-white rounded-3xl shadow-2xl p-8 md:p-12 text-center card-shadow animate-fadeIn">
+              <div class="mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#3ca6ff] to-[#f7e630] bg-clip-text text-transparent">
+                  採用力簡易診断
+                </h1>
+                <p class="text-xl text-gray-600">歯科医院向け</p>
+              </div>
+              
+              <div class="mb-8 p-6 bg-gradient-to-r from-blue-50 to-yellow-50 rounded-2xl">
+                <p class="text-lg leading-relaxed mb-4">
+                  こんにちは！株式会社SABUの代表 齋藤です。
+                </p>
+                <p class="text-lg leading-relaxed">
+                  これから<span class="font-semibold text-[#3ca6ff]">8つの質問</span>をさせていただきます。<br>
+                  正直に答えていただくことで、<br>
+                  <span class="font-semibold">あなたの医院の採用力の現在地</span>が<br>
+                  はっきり見えてきますよ。
+                </p>
+              </div>
+
+              <div class="mb-6 p-4 bg-blue-50 rounded-xl">
+                <p class="text-sm text-gray-600">
+                  <span class="font-semibold">📊 所要時間:</span> 約2〜3分<br>
+                  <span class="font-semibold">✨ 診断後:</span> 改善ポイントを具体的に提案
+                </p>
+              </div>
+
+              <button 
+                onclick="app.startQuestions()" 
+                class="btn-primary bg-gradient-to-r from-[#3ca6ff] to-[#3ca6ff] hover:from-[#2a8fe5] hover:to-[#2a8fe5] text-white font-bold py-4 px-12 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl mx-auto animate-pulse-slow"
+                aria-label="診断を開始する"
+              >
+                診断を始める →
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      // 質問画面
+      renderQuestion() {
+        const q = QUESTIONS[this.currentQuestion];
+        const progress = ((this.currentQuestion + 1) / QUESTIONS.length) * 100;
+
+        return `
+          <div class="min-h-screen flex items-center justify-center p-4">
+            <div class="max-w-3xl w-full">
+              <!-- プログレスバー -->
+              <div class="mb-6 animate-fadeIn">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-sm font-semibold text-gray-600">
+                    質問 ${this.currentQuestion + 1} / ${QUESTIONS.length}
+                  </span>
+                  <span class="text-sm font-semibold text-[#3ca6ff]">
+                    ${Math.round(progress)}%
+                  </span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div 
+                    class="progress-bar h-full bg-gradient-to-r from-[#3ca6ff] to-[#f7e630] rounded-full" 
+                    style="width: ${progress}%"
+                    role="progressbar"
+                    aria-valuenow="${Math.round(progress)}"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- 質問カード -->
+              <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 card-shadow animate-scaleIn">
+                <div class="mb-6">
+                  <span class="inline-block bg-gradient-to-r from-[#3ca6ff] to-[#f7e630] text-white px-6 py-2 rounded-full text-sm font-bold mb-4">
+                    ${q.category}
+                  </span>
+                </div>
+
+                <div class="mb-8">
+                  <p class="text-sm font-semibold text-[#3ca6ff] mb-3">齋藤からの質問:</p>
+                  <h2 class="text-2xl md:text-3xl font-bold mb-4 leading-relaxed">
+                    ${q.question}
+                  </h2>
+                </div>
+
+                <!-- 回答ボタン -->
+                <div class="flex flex-col sm:flex-row gap-4" role="group" aria-label="回答を選択">
+                  <button 
+                    onclick="app.handleAnswer('YES')" 
+                    class="btn-primary flex-1 bg-gradient-to-r from-[#3ca6ff] to-[#3ca6ff] hover:from-[#2a8fe5] hover:to-[#2a8fe5] text-white font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                    aria-label="はいと回答"
+                  >
+                    <span aria-hidden="true">✓</span> YES
+                  </button>
+                  <button 
+                    onclick="app.handleAnswer('NO')" 
+                    class="btn-primary flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                    aria-label="いいえと回答"
+                  >
+                    <span aria-hidden="true">⚠</span> NO
+                  </button>
+                </div>
+
+                <!-- 戻るボタン -->
+                ${this.currentQuestion > 0 ? `
+                  <button 
+                    onclick="app.goBack()" 
+                    class="mt-6 text-gray-600 hover:text-[#3ca6ff] font-semibold flex items-center gap-2 mx-auto transition-colors"
+                    aria-label="前の質問に戻る"
+                  >
+                    ← 前の質問に戻る
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 結果画面
+      renderResult() {
+        const issues = this.getIssues();
+        const score = this.getScore();
+        const scoreComment = this.getScoreComment(score);
+        const adviceMessage = this.getAdviceMessage(score);
+
+        // スター評価HTML生成
+        let starsHtml = '';
+        for (let i = 0; i < 8; i++) {
+          starsHtml += `<span style="--index: ${i}" class="text-3xl ${i < score ? 'text-[#f7e630]' : 'text-gray-300'}" aria-hidden="true">★</span>`;
+        }
+
+        // 改善ポイントHTML生成
+        let issuesHtml = '';
+        if (issues.length > 0) {
+          issuesHtml = `
+            <div class="mb-12">
+              <h3 class="text-2xl font-bold mb-6 text-center">
+                改善ポイント <span class="text-[#3ca6ff]">(${issues.length}個)</span>
+              </h3>
+              <div class="space-y-6">
+                ${issues.map((issue, index) => `
+                  <div class="p-8 bg-gradient-to-br from-[#3ca6ff]/10 to-[#f7e630]/10 rounded-2xl border-2 border-[#3ca6ff] animate-slideIn" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-center gap-3 mb-4">
+                      <span class="text-[#3ca6ff] text-2xl" aria-hidden="true">⚠</span>
+                      <h4 class="text-2xl font-bold">改善ポイント ${index + 1}</h4>
+                    </div>
+                    <div class="mb-4">
+                      <span class="inline-block bg-gradient-to-r from-[#3ca6ff] to-[#f7e630] text-white px-6 py-3 rounded-full text-xl font-bold">
+                        ${issue.category}
+                      </span>
+                    </div>
+                    <p class="text-lg mb-6 font-semibold text-gray-700">${issue.question}</p>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                      <h5 class="text-xl font-bold text-[#3ca6ff] mb-3">choistaでできること</h5>
+                      <p class="text-lg font-semibold mb-2 text-gray-800">${issue.solution.title}</p>
+                      <p class="leading-relaxed text-gray-600 whitespace-pre-line">${issue.solution.description}</p>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        } else {
+          issuesHtml = `
+            <div class="text-center mb-12 p-8 bg-green-50 rounded-2xl animate-scaleIn">
+              <div class="text-green-500 text-6xl mb-4" aria-hidden="true">✓</div>
+              <h3 class="text-2xl font-bold mb-3 text-green-700">素晴らしい採用体制です！</h3>
+              <p class="text-lg text-gray-600">
+                現状の採用活動は良好に運営されています。<br>
+                さらなる改善をご希望の場合は、お気軽にご相談ください。
+              </p>
+            </div>
+          `;
+        }
+
+        return `
+          <div class="min-h-screen p-4 py-12">
+            <div class="max-w-4xl mx-auto">
+              <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8 card-shadow">
+                <!-- スコア表示 -->
+                <div class="text-center mb-12 animate-fadeIn">
+                  <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-[#3ca6ff] to-[#f7e630] bg-clip-text text-transparent">
+                    診断結果
+                  </h2>
+                  
+                  <div class="mb-6">
+                    <div class="star-rating flex items-center justify-center gap-2 mb-4">
+                      ${starsHtml}
+                    </div>
+                    <div class="inline-flex items-baseline gap-2">
+                      <span class="text-6xl md:text-7xl font-bold text-[#3ca6ff]">${score}</span>
+                      <span class="text-3xl md:text-4xl font-bold text-gray-600">/ 8点</span>
+                    </div>
+                  </div>
+                  
+                  <p class="text-2xl font-bold mb-4 text-gray-800">${scoreComment}</p>
+                </div>
+
+                <!-- 齋藤からのコメント -->
+                <div class="mb-12 p-6 bg-gradient-to-r from-blue-50 to-yellow-50 rounded-2xl border-2 border-[#3ca6ff] animate-fadeIn">
+                  <p class="text-sm font-semibold text-[#3ca6ff] mb-2">齋藤からのコメント:</p>
+                  <p class="text-lg leading-relaxed text-gray-700">${adviceMessage}</p>
+                </div>
+
+                <!-- 改善ポイント -->
+                ${issuesHtml}
+
+                <!-- 3D見学体験 -->
+                <div class="mb-12 animate-fadeIn">
+                  <h3 class="text-2xl font-bold mb-4 text-center">choistaの3D見学を体験してみてください✨</h3>
+                  <p class="text-center mb-6 text-lg text-gray-600">
+                    実際にchoistaで制作した3D見学がどのようなものか、<br>
+                    こちらから体験していただけます
+                  </p>
+                  <div class="rounded-2xl overflow-hidden shadow-2xl iframe-container">
+                    <iframe 
+                      src="https://tour.vachanavi.net/tour-d77b0e9597754a94b856c2c281e7a9be" 
+                      allowfullscreen 
+                      allow="clipboard-write"
+                      loading="lazy"
+                      title="choista 3D見学体験"
+                    ></iframe>
+                  </div>
+                </div>
+
+                <!-- 特典資料CTA -->
+                <div class="mb-12 animate-fadeIn">
+                  <div class="p-8 bg-gradient-to-br from-[#3ca6ff]/10 to-[#f7e630]/10 rounded-2xl border-2 border-[#3ca6ff]">
+                    <h3 class="text-2xl font-bold mb-4 text-center">診断結果と特典資料を無料でお届けします！</h3>
+                    <p class="text-center mb-6 text-lg text-gray-600">
+                      あなたの診断結果の詳細レポートと、<br>
+                      採用力向上のための特典資料をメールでお送りします
+                    </p>
+                    <div class="flex justify-center">
+                      <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSfns94l4sDvdPhQY4QorXbtCRi77jFOoG0Mb0D1YQLGRqrSog/viewform"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn-primary bg-gradient-to-r from-[#f7e630] to-[#f7e630] hover:from-[#e6d520] hover:to-[#e6d520] text-white font-bold py-6 px-12 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl no-underline inline-block"
+                        aria-label="特典資料を受け取る（新しいタブで開きます）"
+                      >
+                        特典資料を受け取る →
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- アクションボタン -->
+                <div class="flex flex-col sm:flex-row gap-4 animate-fadeIn">
+                  <a
+                    href="https://app.aitemasu.me/u/hk/muryousoudan14"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-primary flex-1 bg-gradient-to-r from-[#3ca6ff] to-[#3ca6ff] hover:from-[#2a8fe5] hover:to-[#2a8fe5] text-white font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3 no-underline"
+                    aria-label="無料相談を予約する（新しいタブで開きます）"
+                  >
+                    無料相談を予約する →
+                  </a>
+                  <button
+                    onclick="app.restart()"
+                    class="sm:flex-initial bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 flex items-center justify-center gap-3"
+                    aria-label="もう一度診断する"
+                  >
+                    <span aria-hidden="true">↻</span> もう一度診断
+                  </button>
+                </div>
+              </div>
+
+              <!-- フッター -->
+              <div class="text-center text-sm text-gray-600">
+                <p>© choista - 歯科医院の採用力向上を支援</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // レンダリング
+      render() {
+        const app = document.getElementById('app');
+        if (!app) return;
+
+        try {
+          if (this.stage === 'intro') {
+            app.innerHTML = this.renderIntro();
+          } else if (this.stage === 'questions') {
+            app.innerHTML = this.renderQuestion();
+          } else if (this.stage === 'result') {
+            app.innerHTML = this.renderResult();
+          }
+          
+          // ページトップにスクロール
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (error) {
+          console.error('レンダリングエラー:', error);
+          this.showError('画面の表示に失敗しました。');
+        }
+      }
+
+      // 診断開始
+      startQuestions() {
+        this.stage = 'questions';
+        this.currentQuestion = 0;
+        this.answers = {};
+        this.startTime = Date.now();
+        this.render();
+        
+        // トラッキング
+        this.trackEvent('診断開始', { timestamp: this.startTime });
+      }
+
+      // 回答処理
+      handleAnswer(answer) {
+        this.answers[this.currentQuestion] = answer;
+        
+        // トラッキング
+        this.trackEvent('回答', {
+          questionId: QUESTIONS[this.currentQuestion].id,
+          answer: answer
+        });
+        
+        if (this.currentQuestion < QUESTIONS.length - 1) {
+          setTimeout(() => {
+            this.currentQuestion++;
+            this.render();
+          }, 300);
+        } else {
+          setTimeout(() => {
+            this.stage = 'result';
+            const endTime = Date.now();
+            const duration = Math.round((endTime - this.startTime) / 1000);
+            
+            // トラッキング
+            this.trackEvent('診断完了', {
+              score: this.getScore(),
+              duration: duration,
+              issues: this.getIssues().length
+            });
+            
+            this.render();
+          }, 300);
+        }
+      }
+
+      // 前の質問に戻る
+      goBack() {
+        if (this.currentQuestion > 0) {
+          this.currentQuestion--;
+          this.render();
+          
+          // トラッキング
+          this.trackEvent('戻る', { questionId: this.currentQuestion });
+        }
+      }
+
+      // 再診断
+      restart() {
+        this.stage = 'intro';
+        this.currentQuestion = 0;
+        this.answers = {};
+        this.startTime = null;
+        this.render();
+        
+        // トラッキング
+        this.trackEvent('再診断開始');
+      }
+
+      // イベントトラッキング
+      trackEvent(eventName, params = {}) {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', eventName, params);
+        }
+        console.log('Event:', eventName, params);
+      }
+    }
+
+    // =========================
+    // アプリケーション初期化
+    // =========================
+    let app;
+    
+    // DOM読み込み完了後に初期化
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        app = new DiagnosisApp();
+      });
+    } else {
+      app = new DiagnosisApp();
+    }
+
+    // キーボードショートカット（アクセシビリティ）
+    document.addEventListener('keydown', (e) => {
+      if (app && app.stage === 'questions') {
+        if (e.key === 'y' || e.key === 'Y') {
+          app.handleAnswer('YES');
+        } else if (e.key === 'n' || e.key === 'N') {
+          app.handleAnswer('NO');
+        } else if (e.key === 'ArrowLeft' && app.currentQuestion > 0) {
+          app.goBack();
+        }
+      }
+    });
+  </script>
+
+  <!-- 構造化データ（SEO対策） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "歯科医院向け採用力簡易診断",
+    "description": "8つの質問であなたの医院の採用力を診断。採用活動の課題を見える化し、改善ポイントを具体的に提案します。",
+    "applicationCategory": "BusinessApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "JPY"
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "choista",
+      "url": "https://example.com"
+    }
+  }
+  </script>
+</body>
+</html>
