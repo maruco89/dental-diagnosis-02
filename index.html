@@ -435,7 +435,7 @@
               <!-- 質問カード -->
               <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 card-shadow animate-scaleIn">
                 <div class="mb-6">
-                  <span class="inline-block bg-gradient-to-r from-[#cde9ff] to-[#fff58c] text-[#272727] px-6 py-2 rounded-full text-base font-bold mb-4">
+                  <span class="inline-block bg-gradient-to-r from-[#cde9ff] to-[#fff58c] text-gray-600 px-6 py-2 rounded-full text-base font-bold mb-4">
                     ${q.category}
                   </span>
                 </div>
@@ -451,14 +451,14 @@
                 <div class="flex flex-col sm:flex-row gap-4" role="group" aria-label="回答を選択">
                   <button 
                     onclick="app.handleAnswer('YES')" 
-                    class="btn-primary flex-1 bg-gradient-to-r from-[#3ca6ff] to-[#3ca6ff] hover:from-[#2a8fe5] hover:to-[#2a8fe5] text-white font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                    class="btn-primary flex-1 bg-gradient-to-r from-[#fff58c] to-[#fff58c] hover:from-[#f7e630] hover:to-[#f7e630] text-gray-600 font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
                     aria-label="はいと回答"
                   >
                     <span aria-hidden="true"></span> YES
                   </button>
                   <button 
                     onclick="app.handleAnswer('NO')" 
-                    class="btn-primary flex-1 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
+                    class="btn-primary flex-1 bg-gradient-to-r from-[#fff58c] to-[#fff58c] hover:from-[#f7e630] hover:to-[#f7e630] text-gray-600 font-bold py-6 px-8 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-3"
                     aria-label="いいえと回答"
                   >
                     <span aria-hidden="true"></span> NO
@@ -507,7 +507,7 @@
                   <div class="p-8 bg-gradient-to-br from-[#3ca6ff]/10 to-[#f7e630]/10 rounded-2xl border-2 border-[#3ca6ff] animate-slideIn" style="animation-delay: ${index * 0.1}s">
                     <div class="flex items-center gap-3 mb-4">
                       <span class="text-[#3ca6ff] text-2xl" aria-hidden="true"></span>
-                      <h4 class="text-2xl font-bold">改善ポイント その ${index + 1}</h4>
+                      <h4 class="text-2xl font-bold">改善ポイント その ${index +1}</h4>
                     </div>
                     <div class="mb-4">
                       <span class="inline-block bg-gradient-to-r from-[#3ca6ff] to-[#3ca6ff] text-white px-6 py-3 rounded-full text-xl font-bold">
